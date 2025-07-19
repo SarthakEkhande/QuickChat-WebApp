@@ -1,0 +1,30 @@
+{
+  "name": "quick_chat_server",
+  "version": "1.0.0",
+  "description": "realtime chat application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SarthakEkhande/QuickChat.git"
+  },
+  "author": "Sarthak Ekhande",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SarthakEkhande/QuickChat/issues"
+  },
+  "homepage": "https://github.com/SarthakEkhande/QuickChat#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
