@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { loginUser } from "../../apiCalls/auth.js";
 // import { loginUser } from './../../apiCalls/auth';
 // import { toast } from 'react-hot-toast';
 // import { useDispatch } from "react-redux";
@@ -12,29 +13,31 @@ function Login(){
         password: ''
     });
 
-    async function onFormSubmit(event){
-    event.preventDefault()
-        console.log("onFormSubmit called",user);
-        
-        // event.preventDefault();
-        // let response = null;
-        // try{
-        //     dispatch(showLoader());
-        //     response = await loginUser(user);
-        //     // dispatch(hideLoader());
+   async function onFormSubmit(event) {
+  event.preventDefault();
+  console.log("onFormSubmit called", user);
 
-        //     if(response.success){
-        //         toast.success(response.message);
-        //         localStorage.setItem('token', response.token);
-        //         window.location.href = "/";
-        //     }else{
-        //         toast.error(response.message);
-        //     }
-        // }catch(error){
-        //     dispatch(hideLoader());
-        //     toast.error(response.message);
-        // }
+  let response = null;
+
+  try {
+    // dispatch(showLoader());
+    response = await loginUser(user);
+    // dispatch(hideLoader());
+
+    if (response.success) {
+      alert(response.message);
+      // toast.success(response.message);
+      localStorage.setItem('token', response.token);
+      window.location.href = "/";
+    } else {
+      alert(response.message);
     }
+  } catch (error) {
+    // dispatch(hideLoader());
+    toast.error("Something went wrong");
+  }
+}
+
 
     return (
         <div className="container">
