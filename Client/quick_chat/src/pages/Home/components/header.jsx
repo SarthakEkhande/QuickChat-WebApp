@@ -2,25 +2,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Header( { }){
-    // const { user } = useSelector(state => state.userReducer);
+    const { user } = useSelector(state => state.userReducer);
+      console.log("useruser", user);
+
     const navigate = useNavigate();
-    // function getFullname(){
-    //     let fname = user?.firstname.at(0).toUpperCase() + user?.firstname.slice(1).toLowerCase();
-    //     let lname = user?.lastname.at(0).toUpperCase() + user?.lastname.slice(1).toLowerCase();
-    //     return fname + ' ' + lname;
-    // }
+    function getFullname(){
+        let fname = user?.firstName.at(0).toUpperCase() + user?.firstName.slice(1).toLowerCase();
+        let lname = user?.lastname.at(0).toUpperCase() + user?.lastname.slice(1).toLowerCase();
+        return fname + ' ' + lname;
+    }
 
-    // function getInitials(){
-    //     let f = user?.firstname.toUpperCase()[0];
-    //     let l = user?.lastname.toUpperCase()[0];
-    //     return f + l;
-    // }
+    function getInitials(){
+        let f = user?.firstName.toUpperCase()[0];
+        let l = user?.lastname.toUpperCase()[0];
+        return f + l;
+    }
 
-    // const logout = () => {
-    //     localStorage.removeItem('token');
-    //     navigate('/login');
-    //     socket.emit('user-offline', user._id);
-    // }
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+        socket.emit('user-offline', user._id);
+    }
 
     return (
             <div className="app-header">
@@ -29,10 +31,10 @@ function Header( { }){
                     Quick Chat
                     </div>
                 <div className="app-user-profile">
-                    {/* {user?.profilePic && <img src={user?.profilePic} alt="profile-pic" className="logged-user-profile-pic" onClick={ () => navigate('/profile')}></img>}
-                    { !user?.profilePic && <div className="logged-user-profile-pic" onClick={ () => navigate('/profile')}>{ getInitials() }</div>} */}
-                    <div className="logged-user-name">sarthak</div>
-                    <div className="logged-user-profile-pic">Js</div>
+                    {/* {user?.profilePic && <img src={user?.profilePic} alt="profile-pic" className="logged-user-profile-pic" onClick={ () => navigate('/profile')}></img>} */}
+                    {/* { !user?.profilePic && <div className="logged-user-profile-pic" onClick={ () => navigate('/profile')}>{ getInitials() }</div>}  */}
+                    <div className="logged-user-name">{getFullname()}</div>
+                    <div className="logged-user-profile-pic"> {getInitials()}</div>
 
                     {/* <button className="logout-button" onClick={ logout }> */}
                         {/* <i className="fa fa-power-off"></i> */}

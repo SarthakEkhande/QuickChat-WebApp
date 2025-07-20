@@ -10,3 +10,13 @@ try{
 
 }
 }
+
+export const getAllUsers=async()=>{
+try{
+    const response =await axiosInstance.get('/user/get-all-users')
+    return response.data
+
+}catch(error){
+
+}
+}
