@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { signupUser } from './../../apiCalls/auth';
-// import { toast } from 'react-hot-toast';
-// import { useDispatch } from "react-redux";
-// import { showLoader, hideLoader } from "../../redux/loaderSlice";
+import { toast } from 'react-hot-toast';
+import { useDispatch } from "react-redux";
+import { hideLoader, showLoader } from "../../redux/loaderSlice.js";
 import { SignupUser } from "../../apiCalls/auth.js";
+
 function Signup(){
+      const dispatch = useDispatch();
+  
   const [user,setUser]=useState({
     firstName:"",
     lastname :"",
@@ -19,16 +22,23 @@ const onFormSubmit = async (event) => {
   let response = null;
   
   try {
+        dispatch(showLoader());
+    
     response = await SignupUser(user);
     console.log("useruser1", response);
+        dispatch(hideLoader());
+    
     if (response.success) {
-      alert(response.message);
+      toast.success(response.message);
     } else {
-      alert(response.message);
+      toast.error(response.message);
     }
   } catch (error) {
-    alert("Something went wrong: " + (error?.message || "Unknown error"));
-    console.error("Signup error:", error);
+    // alert("Something went wrong: " + (error?.message || "Unknown error"));
+ toast.error("Something went wrong");
+     dispatch(hideLoader());
+ 
+
   }
 };
 
