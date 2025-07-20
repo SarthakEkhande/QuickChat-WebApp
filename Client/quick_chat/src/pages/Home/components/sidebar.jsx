@@ -10,6 +10,7 @@ function Sidebar(){
         <div className="app-sidebar">
           <Search searchKey={searchKey}setSearchKey={setSearchKey} ></Search>
         <UserList searchKey={searchKey}></UserList>
+        
         </div>
 )
 }

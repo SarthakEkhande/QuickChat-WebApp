@@ -355,12 +355,12 @@ i{
 
 .app-chat-area{
   background-color: white;
-  width: 70%;
+  width: 350%;
   padding: 20px 30px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  height: 75vh;
 }
 
 /*******************************************************

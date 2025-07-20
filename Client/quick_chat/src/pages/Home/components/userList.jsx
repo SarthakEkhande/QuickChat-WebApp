@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoader, showLoader } from "../../../redux/loaderSlice";
-import { setallchats } from "../../../redux/userSlice";
+import { setallchats, setselectedChat } from "../../../redux/userSlice";
 import { createNewChat } from "../../../apiCalls/chat";
 
 function UserList({ searchKey }) {
@@ -9,6 +9,7 @@ function UserList({ searchKey }) {
   const {
     user: currentUser,
     allusers,
+    selectedChat,
     allchats,
   } = useSelector((state) => state.userReducer);
 
@@ -25,7 +26,7 @@ function UserList({ searchKey }) {
              const newChat = response.data
             const updatedChat =[...allchats,newChat]
             dispatch(setallchats(updatedChat))
-
+           dispatch(setselectedChat(newChat))
               
             }
     } catch (error) {
@@ -33,18 +34,38 @@ function UserList({ searchKey }) {
       dispatch(hideLoader());
     }
   };
+
+  const openChat=async(selecteduserid)=>{
+    const chat=allchats.find(chat=>chat.members.map(m=>m._id).includes(currentUser._id) &&
+    chat.members.map(m=>m._id).includes(selecteduserid)
+)
+
+   if(chat){
+    dispatch(setselectedChat(chat))
+   }
+
+
+
+
+  }
+   const IsSelectedChats=(user)=>{
+    if(selectedChat){
+      return  selectedChat.members.map(m=>m._id).includes(user._id)
+    }
+
+   }
   return allusers
     .filter(
       (user) =>
         ((user.firstName.toLowerCase().includes(searchKey.toLowerCase()) ||
           user.lastname.toLowerCase().includes(searchKey.toLowerCase())) &&
           searchKey) ||
-        allchats.some((chat) => chat.members.includes(user._id))
+        allchats.some((chat) => chat.members.map(m=>m._id).includes(user._id))
     )
     .map((user) => {
       return (
-        <div className="user-search-filter">
-          <div className="filtered-user">
+        <div className="user-search-filter" key={user._id} onClick={()=>openChat(user._id)}>
+          <div className={IsSelectedChats(user) ? "selected-user" : "filtered-user"}>
             <div className="filter-user-display">
               {user.profilePic ? (
                 <img
@@ -53,7 +74,7 @@ function UserList({ searchKey }) {
                   className="user-profile-image"
                 />
               ) : (
-                <div className="user-default-profile-pic">
+                <div className={IsSelectedChats(user) ? "user-selected-avatar" : "user-default-avatar" }>
                   {user.firstName.charAt(0).toUpperCase() +
                     user.lastname.charAt(0).toUpperCase()}
                 </div>
@@ -64,7 +85,7 @@ function UserList({ searchKey }) {
                 </div>
                 <div className="user-display-email">{user.email}</div>
               </div>
-              {!allchats.find((chat) => chat.members.includes(user._id)) && (
+              {!allchats.find((chat) => chat.members.map(m=>m._id).includes(user._id)) && (
                 <div className="user-start-chat">
                   <button
                     className="user-start-chat-btn"
