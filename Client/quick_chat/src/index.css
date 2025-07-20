@@ -326,6 +326,18 @@ i{
   color: #e74c3c;
 }
 
+.user-default-profile-pic, .user-profile-image{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;
+}
 .user-start-chat{
   padding: 10px 0px;
 }
