@@ -4,7 +4,8 @@ import { getAllUsers, getLoggedUser } from "../apiCalls/users.js";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoader, showLoader } from "../redux/loaderSlice.js";
 import toast from "react-hot-toast";
-import { setallUser, setUser } from "../redux/userSlice.js";
+import { setallchats, setallUser, setUser } from "../redux/userSlice.js";
+import { getAllChats } from "../apiCalls/chat.js";
 
 export const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -32,34 +33,54 @@ export const ProtectedRoute = ({ children }) => {
       setRedirectToLogin(true);
     }
   };
- const getAllUser = async () => {
-   try{
-  dispatch(showLoader());
+  const getAllUser = async () => {
+    try {
+      dispatch(showLoader());
       const response = await getAllUsers();
       dispatch(hideLoader());
 
       if (response.success) {
-        console.log("setallUser",response);
-        
+        console.log("setallUser", response);
+
         dispatch(setallUser(response.data));
         setLoading(false);
       } else {
         toast.error(response.message);
         setRedirectToLogin(true);
       }
-
-   }catch(error){
- dispatch(hideLoader());
+    } catch (error) {
+      dispatch(hideLoader());
       setRedirectToLogin(true);
-   }
- }
+    }
+  };
+  const getallcurrentchats = async () => {
+    try {
+      dispatch(showLoader());
+      const response = await getAllChats();
+      dispatch(hideLoader());
+
+      if (response.success) {
+        console.log("setallUser", response);
+
+        dispatch(setallchats(response.data));
+        setLoading(false);
+      } else {
+        toast.error(response.message);
+        setRedirectToLogin(true);
+      }
+    } catch (error) {
+      dispatch(hideLoader());
+      setRedirectToLogin(true);
+    }
+  };
 
   useEffect(() => {
     if (!token) {
       setRedirectToLogin(true);
     } else {
       getloggeduser();
-      getAllUser()
+      getAllUser();
+      getallcurrentchats();
     }
   }, []);
 
