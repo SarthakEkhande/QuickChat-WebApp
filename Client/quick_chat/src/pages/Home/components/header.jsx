@@ -7,9 +7,10 @@ function Header( { }){
 
     const navigate = useNavigate();
     function getFullname(){
-        let fname = user?.firstName.at(0).toUpperCase() + user?.firstName.slice(1).toLowerCase();
-        let lname = user?.lastname.at(0).toUpperCase() + user?.lastname.slice(1).toLowerCase();
-        return fname + ' ' + lname;
+      const fname=user?.firstName.at(0).toUpperCase() + user?.firstName.slice(1).toLowerCase()
+    const lname=user?.lastname.at(0).toUpperCase() + user?.lastname.slice(1).toLowerCase()
+
+    return fname + " " + lname
     }
 
     function getInitials(){
@@ -23,6 +24,7 @@ function Header( { }){
         navigate('/login');
         socket.emit('user-offline', user._id);
     }
+
 
     return (
             <div className="app-header">

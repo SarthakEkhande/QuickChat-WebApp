@@ -63,6 +63,14 @@ function Chat() {
   useEffect(() => {
     getmessages();
   }, [selectedChat]);
+
+  const formatName=(user)=>{
+    const fname=user?.firstName.at(0).toUpperCase() + user?.firstName.slice(1).toLowerCase()
+    const lname=user?.lastname.at(0).toUpperCase() + user?.lastname.slice(1).toLowerCase()
+
+    return fname + " " + lname
+
+   }
   return (
     <div>
       {" "}
@@ -70,7 +78,7 @@ function Chat() {
         <div class="app-chat-area">
           <div class="app-chat-area-header">
             {/* <!--RECEIVER DATA--> */}
-            {selectedUser.firstName + " " + selectedUser.lastname}{" "}
+            {formatName(selectedUser)}
           </div>
           <div class="main-chat-area">
             {allMessage.map((msg) => {
