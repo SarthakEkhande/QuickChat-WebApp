@@ -4,9 +4,10 @@ import { hideLoader, showLoader } from "../../../redux/loaderSlice";
 import toast from "react-hot-toast/headless";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { clearUnreadmessagecount } from "../../../apiCalls/chat";
 
 function Chat() {
-  const { user, selectedChat } = useSelector((state) => state.userReducer);
+  const { user, selectedChat,allChats } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const selectedUser = selectedChat?.members.find((u) => u._id !== user._id);
@@ -47,6 +48,25 @@ function Chat() {
       return error;
     }
   };
+    const clearUnreadmessages = async () => {
+    try {
+      dispatch(showLoader());
+      const response = await clearUnreadmessagecount(selectedChat._id);
+      dispatch(hideLoader());
+      if (response.success) {
+       allChats.map(chat=>{
+        if(chat._id === selectedChat.id){
+          return response.data
+        }
+        return chat
+       })
+      }
+    } catch (error) {
+      dispatch(hideLoader());
+      toast.error(error.message);
+      return error;
+    }
+  };
 
   const formatTime = (timestamp) => {
     const now = moment();
@@ -62,6 +82,7 @@ function Chat() {
   };
   useEffect(() => {
     getmessages();
+    clearUnreadmessages()
   }, [selectedChat]);
 
   const formatName=(user)=>{
@@ -71,6 +92,8 @@ function Chat() {
     return fname + " " + lname
 
    }
+
+
   return (
     <div>
       {" "}

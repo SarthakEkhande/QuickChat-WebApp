@@ -71,7 +71,7 @@ const getLastMessageTimeStamp=(userId)=>{
    const getLastMessage=(userID)=>{
    const chat=allchats.find(chat=>chat.members.map(m=>m._id).includes(userID))
 
-   if(!chat){
+   if(!chat || !chat.lastmessage){
     return ""
    }else{
     const messagePrefix= chat?.lastmessage?.sender===currentUser._id ? "You : " :""
